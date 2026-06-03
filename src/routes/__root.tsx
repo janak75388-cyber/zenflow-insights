@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { PageTransition } from "@/components/PageTransition";
 
 function NotFoundComponent() {
   return (
