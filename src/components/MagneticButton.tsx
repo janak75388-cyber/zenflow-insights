@@ -1,23 +1,19 @@
-import { useEffect, useRef, type ComponentProps, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from "react";
 import { gsap } from "gsap";
 
-type Props = {
+type CommonProps = {
   children: ReactNode;
   className?: string;
   strength?: number;
-  href?: string;
-  as?: "button" | "a";
-} & Omit<ComponentProps<"button">, "ref">;
+};
 
-export function MagneticButton({
-  children,
-  className,
-  strength = 0.4,
-  href,
-  as,
-  ...rest
-}: Props) {
-  const ref = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
+type AnchorProps = CommonProps & { as: "a"; href: string } & AnchorHTMLAttributes<HTMLAnchorElement>;
+type ButtonProps = CommonProps & { as?: "button" } & ButtonHTMLAttributes<HTMLButtonElement>;
+type Props = AnchorProps | ButtonProps;
+
+export function MagneticButton(props: Props) {
+  const { children, className, strength = 0.4 } = props;
+  const ref = useRef<HTMLElement | null>(null);
   const innerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -25,10 +21,11 @@ export function MagneticButton({
     const inner = innerRef.current;
     if (!el || !inner) return;
 
-    const onMove = (e: MouseEvent) => {
+    const onMove = (e: Event) => {
+      const me = e as MouseEvent;
       const rect = el.getBoundingClientRect();
-      const x = (e.clientX - (rect.left + rect.width / 2)) * strength;
-      const y = (e.clientY - (rect.top + rect.height / 2)) * strength;
+      const x = (me.clientX - (rect.left + rect.width / 2)) * strength;
+      const y = (me.clientY - (rect.top + rect.height / 2)) * strength;
       gsap.to(el, { x, y, duration: 0.5, ease: "power3.out" });
       gsap.to(inner, { x: x * 0.4, y: y * 0.4, duration: 0.5, ease: "power3.out" });
     };
@@ -45,17 +42,25 @@ export function MagneticButton({
     };
   }, [strength]);
 
-  const Tag = (as ?? (href ? "a" : "button")) as "a" | "button";
+  const classes = `inline-block will-change-transform ${className ?? ""}`;
+  const inner = (
+    <span ref={innerRef} className="inline-flex items-center gap-4 will-change-transform">
+      {children}
+    </span>
+  );
+
+  if (props.as === "a") {
+    const { as: _a, children: _c, className: _cn, strength: _s, ...rest } = props;
+    return (
+      <a ref={ref as React.RefObject<HTMLAnchorElement>} className={classes} {...rest}>
+        {inner}
+      </a>
+    );
+  }
+  const { as: _a, children: _c, className: _cn, strength: _s, ...rest } = props;
   return (
-    <Tag
-      ref={ref as never}
-      href={href}
-      className={`inline-block will-change-transform ${className ?? ""}`}
-      {...(rest as never)}
-    >
-      <span ref={innerRef} className="inline-flex items-center gap-4 will-change-transform">
-        {children}
-      </span>
-    </Tag>
+    <button ref={ref as React.RefObject<HTMLButtonElement>} className={classes} {...rest}>
+      {inner}
+    </button>
   );
 }
