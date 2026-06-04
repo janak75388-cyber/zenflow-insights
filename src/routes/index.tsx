@@ -49,8 +49,8 @@ function Home() {
       <SiteNav />
 
       {/* Hero with parallax 3D object */}
-      <section className="relative min-h-screen flex flex-col justify-end px-6 md:px-10 pb-16 pt-32 overflow-hidden">
-        <FloatingObject className="absolute top-0 right-0 w-full md:w-3/4 h-full z-0 opacity-70" />
+      <section className="relative min-h-[100svh] flex flex-col justify-end px-5 md:px-10 pb-12 md:pb-16 pt-28 md:pt-32 overflow-hidden">
+        <FloatingObject className="absolute top-0 right-0 w-full md:w-3/4 h-full z-0 opacity-60 md:opacity-70" />
 
         <div className="relative z-10 w-full max-w-[1600px] mx-auto">
           <Reveal className="flex items-baseline gap-4 mb-6" y={20}>
@@ -58,10 +58,10 @@ function Home() {
             <div className="h-px flex-1 bg-foreground/5" />
           </Reveal>
 
-          <h1 className="text-[clamp(3.5rem,14vw,16rem)] font-extrabold leading-[0.82] tracking-tighter uppercase">
+          <h1 className="text-[clamp(3rem,13vw,15rem)] font-extrabold leading-[0.85] tracking-tighter uppercase">
             <Reveal splitWords>Engineering</Reveal>
-            <div className="flex items-center gap-4 md:gap-10">
-              <Reveal as="span" className="font-serif italic font-semibold normal-case tracking-tight border-b-[6px] md:border-b-[10px] border-brand leading-none px-2" delay={0.1}>
+            <div className="flex items-center gap-3 md:gap-10 flex-wrap">
+              <Reveal as="span" className="font-serif italic font-semibold normal-case tracking-tight border-b-[5px] md:border-b-[10px] border-brand leading-none px-2" delay={0.1}>
                 the
               </Reveal>
               <Reveal as="span" splitWords delay={0.2}>Digital</Reveal>
