@@ -125,12 +125,14 @@ function Home() {
             </span>
           </Reveal>
           <StackedServices items={services} />
-          <div className="h-[40vh]" />
         </div>
       </section>
 
       {/* Horizontal portfolio with pinned scroll */}
       <HorizontalPortfolio items={portfolio} />
+
+      {/* Glassmorphism 3D showcase */}
+      <GlassShowcase />
 
       {/* Metrics with glass cards */}
       <section className="relative py-24 md:py-32 px-6 md:px-10 bg-brand text-brand-foreground overflow-hidden">
@@ -146,8 +148,16 @@ function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {metrics.map((m, i) => (
               <Reveal key={m.label} delay={i * 0.08}>
-                <div className="rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30 p-6 md:p-8 h-full">
-                  <span className="block text-5xl md:text-6xl font-extrabold tracking-tighter">{m.value}</span>
+                <div className="rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30 p-6 md:p-8 h-full transition-transform duration-500 hover:-translate-y-1.5">
+                  <span className="block text-5xl md:text-6xl font-extrabold tracking-tighter tabular-nums">
+                    <CountUp
+                      to={m.to}
+                      decimals={"decimals" in m ? m.decimals : 0}
+                      suffix={"suffix" in m ? m.suffix : ""}
+                      pad={"pad" in m ? m.pad : 0}
+                      duration={1}
+                    />
+                  </span>
                   <p className="text-[10px] font-bold uppercase tracking-widest mt-3 opacity-60">{m.label}</p>
                 </div>
               </Reveal>
