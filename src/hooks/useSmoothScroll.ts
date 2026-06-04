@@ -9,6 +9,8 @@ let registered = false;
 export function useSmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
     if (!registered) {
       gsap.registerPlugin(ScrollTrigger);
       registered = true;
@@ -19,6 +21,8 @@ export function useSmoothScroll() {
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      // Native touch scrolling for snap to work on mobile
+      syncTouch: false,
     });
 
     lenis.on("scroll", ScrollTrigger.update);
