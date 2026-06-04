@@ -54,7 +54,9 @@
   }
   /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
@@ -85,7 +87,9 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
-.snap-scroll-x::-webkit-scrollbar { display: none; }
+.snap-scroll-x::-webkit-scrollbar {
+  display: none;
+}
 
 @utility snap-item {
   scroll-snap-align: center;
@@ -95,7 +99,9 @@
 @utility tilt-card {
   transform-style: preserve-3d;
   perspective: 1000px;
-  transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.5s ease;
+  transition:
+    transform 0.5s cubic-bezier(0.2, 1, 0.3, 1),
+    box-shadow 0.5s ease;
 }
 .tilt-card:hover {
   transform: translateY(-6px);
@@ -105,7 +111,9 @@
 /* Magnetic button glow */
 @utility btn-glow {
   position: relative;
-  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  transition:
+    box-shadow 0.4s ease,
+    transform 0.4s ease;
 }
 .btn-glow:hover {
   box-shadow:
@@ -115,22 +123,47 @@
 }
 
 @keyframes reveal-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 @keyframes spin-slow {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
-.animate-reveal { animation: reveal-up 0.9s cubic-bezier(0.2, 1, 0.3, 1) both; }
-.animate-marquee { animation: marquee 38s linear infinite; }
-.animate-spin-slow { animation: spin-slow 20s linear infinite; }
-.animate-pulse { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-reveal {
+  animation: reveal-up 0.9s cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+.animate-pulse {
+  animation: pulse-glow 3s ease-in-out infinite;
+}

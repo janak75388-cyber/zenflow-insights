@@ -18,19 +18,46 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Zencyp — Engineering the Digital Desire" },
-      { name: "description", content: "An India-based tech consultancy bridging high-performance engineering with emotive digital experiences." },
+      {
+        name: "description",
+        content:
+          "An India-based tech consultancy bridging high-performance engineering with emotive digital experiences.",
+      },
       { property: "og:title", content: "Zencyp — Engineering the Digital Desire" },
-      { property: "og:description", content: "Studio for product strategy, future tech and engineering excellence." },
+      {
+        property: "og:description",
+        content: "Studio for product strategy, future tech and engineering excellence.",
+      },
     ],
   }),
   component: Home,
 });
 
 const services = [
-  { n: "01", title: "Strategic Design", tags: ["Research", "Systems"], copy: "Product strategy, UX research, and high-fidelity visual systems designed for rapid engineering handoff. We make decisions defensible." },
-  { n: "02", title: "Future Tech", tags: ["AI", "Cloud"], copy: "Cloud-native architectures, AI-first interfaces, and custom integrations for the next web. Built for change, instrumented from day one." },
-  { n: "03", title: "Performance", tags: ["Edge", "Observability"], copy: "Edge infrastructure and observability built for sub-30ms responses across global markets. Speed as a discipline, not a sprint." },
-  { n: "04", title: "Brand & Motion", tags: ["Identity", "Motion"], copy: "Identity systems and kinetic interfaces that feel weighted, intentional, and unmistakably yours." },
+  {
+    n: "01",
+    title: "Strategic Design",
+    tags: ["Research", "Systems"],
+    copy: "Product strategy, UX research, and high-fidelity visual systems designed for rapid engineering handoff. We make decisions defensible.",
+  },
+  {
+    n: "02",
+    title: "Future Tech",
+    tags: ["AI", "Cloud"],
+    copy: "Cloud-native architectures, AI-first interfaces, and custom integrations for the next web. Built for change, instrumented from day one.",
+  },
+  {
+    n: "03",
+    title: "Performance",
+    tags: ["Edge", "Observability"],
+    copy: "Edge infrastructure and observability built for sub-30ms responses across global markets. Speed as a discipline, not a sprint.",
+  },
+  {
+    n: "04",
+    title: "Brand & Motion",
+    tags: ["Identity", "Motion"],
+    copy: "Identity systems and kinetic interfaces that feel weighted, intentional, and unmistakably yours.",
+  },
 ];
 
 const portfolio = [
@@ -65,10 +92,16 @@ function Home() {
           <h1 className="text-[clamp(3rem,13vw,15rem)] font-extrabold leading-[0.85] tracking-tighter uppercase">
             <Reveal splitWords>Engineering</Reveal>
             <div className="flex items-center gap-3 md:gap-10 flex-wrap">
-              <Reveal as="span" className="font-serif italic font-semibold normal-case tracking-tight border-b-[5px] md:border-b-[10px] border-brand leading-none px-2" delay={0.1}>
+              <Reveal
+                as="span"
+                className="font-serif italic font-semibold normal-case tracking-tight border-b-[5px] md:border-b-[10px] border-brand leading-none px-2"
+                delay={0.1}
+              >
                 the
               </Reveal>
-              <Reveal as="span" splitWords delay={0.2}>Digital</Reveal>
+              <Reveal as="span" splitWords delay={0.2}>
+                Digital
+              </Reveal>
             </div>
             <Reveal as="div" className="text-outline" delay={0.4} splitWords>
               Desire.
@@ -78,11 +111,15 @@ function Home() {
           <div className="mt-12 flex flex-col md:flex-row gap-12 md:gap-16 items-start md:items-end">
             <Reveal className="max-w-md" delay={0.5}>
               <p className="text-lg md:text-xl font-light text-foreground/70 leading-snug mb-6">
-                An India-based tech consultancy bridging the gap between high-performance engineering and emotive digital experiences.
+                An India-based tech consultancy bridging the gap between high-performance
+                engineering and emotive digital experiences.
               </p>
               <div className="flex flex-wrap gap-3">
                 {["Architecture", "Identity", "Scale"].map((t) => (
-                  <span key={t} className="px-3 py-1 rounded-full border border-foreground/10 bg-background/60 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest">
+                  <span
+                    key={t}
+                    className="px-3 py-1 rounded-full border border-foreground/10 bg-background/60 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest"
+                  >
                     {t}
                   </span>
                 ))}
@@ -92,7 +129,9 @@ function Home() {
             <a href="#capabilities" className="md:ml-auto group cursor-pointer relative shrink-0">
               <div className="size-28 md:size-32 rounded-full border border-foreground/10 bg-background/40 backdrop-blur-md flex items-center justify-center group-hover:bg-brand group-hover:border-brand transition-all duration-700">
                 <div className="text-center">
-                  <span className="block text-[10px] font-bold uppercase tracking-widest mb-1">Scroll</span>
+                  <span className="block text-[10px] font-bold uppercase tracking-widest mb-1">
+                    Scroll
+                  </span>
                   <span className="block text-xs">↓</span>
                 </div>
               </div>
@@ -110,8 +149,20 @@ function Home() {
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex gap-16 shrink-0">
-              {["Interface Design", "Architecture", "Strategy", "Intelligence", "Motion", "Engineering"].map((t) => (
-                <span key={t} className="font-serif italic text-3xl md:text-5xl text-foreground/20 uppercase">{t}</span>
+              {[
+                "Interface Design",
+                "Architecture",
+                "Strategy",
+                "Intelligence",
+                "Motion",
+                "Engineering",
+              ].map((t) => (
+                <span
+                  key={t}
+                  className="font-serif italic text-3xl md:text-5xl text-foreground/20 uppercase"
+                >
+                  {t}
+                </span>
               ))}
             </div>
           ))}
@@ -163,7 +214,9 @@ function Home() {
                       duration={1}
                     />
                   </span>
-                  <p className="text-[10px] font-bold uppercase tracking-widest mt-3 opacity-60">{m.label}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest mt-3 opacity-60">
+                    {m.label}
+                  </p>
                 </div>
               </Reveal>
             ))}
@@ -174,10 +227,16 @@ function Home() {
       {/* CTA with magnetic button */}
       <section className="py-32 md:py-48 px-6 md:px-10 text-center bg-background relative overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-[0.04] pointer-events-none flex items-center justify-center">
-          <span className="text-[30vw] font-black uppercase tracking-tighter leading-none">ZEN</span>
+          <span className="text-[30vw] font-black uppercase tracking-tighter leading-none">
+            ZEN
+          </span>
         </div>
         <div className="relative z-10">
-          <Reveal as="h2" splitWords className="text-[clamp(2.75rem,10vw,10rem)] font-extrabold tracking-tighter leading-[0.9] mb-12">
+          <Reveal
+            as="h2"
+            splitWords
+            className="text-[clamp(2.75rem,10vw,10rem)] font-extrabold tracking-tighter leading-[0.9] mb-12"
+          >
             Let's build something real.
           </Reveal>
           <MagneticButton
@@ -189,7 +248,10 @@ function Home() {
             Connect <span className="text-2xl">→</span>
           </MagneticButton>
           <div className="mt-8">
-            <Link to="/work" className="text-[11px] font-bold uppercase tracking-widest hover:text-foreground/60 underline decoration-brand decoration-2 underline-offset-4">
+            <Link
+              to="/work"
+              className="text-[11px] font-bold uppercase tracking-widest hover:text-foreground/60 underline decoration-brand decoration-2 underline-offset-4"
+            >
               See selected work →
             </Link>
           </div>
@@ -200,4 +262,3 @@ function Home() {
     </div>
   );
 }
-
