@@ -6,6 +6,8 @@ import { MagneticButton } from "@/components/MagneticButton";
 import { StackedServices } from "@/components/StackedServices";
 import { HorizontalPortfolio } from "@/components/HorizontalPortfolio";
 import { FloatingObject } from "@/components/FloatingObject";
+import { GlassShowcase } from "@/components/GlassShowcase";
+import { CountUp } from "@/components/CountUp";
 import workVault from "@/assets/work-vault.jpg";
 import workLumina from "@/assets/work-lumina.jpg";
 import workAether from "@/assets/work-aether.jpg";
