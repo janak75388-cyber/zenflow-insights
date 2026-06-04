@@ -8,7 +8,6 @@ import { HorizontalPortfolio } from "@/components/HorizontalPortfolio";
 import { FloatingObject } from "@/components/FloatingObject";
 import { Mobile3DHero } from "@/components/Mobile3DHero";
 import { ImageReveal } from "@/components/ImageReveal";
-import { SplineHero } from "@/components/SplineHero";
 import { CountUp } from "@/components/CountUp";
 import workVault from "@/assets/work-vault.jpg";
 import workLumina from "@/assets/work-lumina.jpg";
@@ -28,13 +27,6 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content: "Studio for product strategy, future tech and engineering excellence.",
-      },
-    ],
-    scripts: [
-      {
-        type: "module",
-        src: "https://unpkg.com/@splinetool/viewer/build/spline-viewer.js",
-        async: true,
       },
     ],
   }),
@@ -87,15 +79,9 @@ function Home() {
     <div className="bg-background text-foreground font-sans">
       <SiteNav />
 
-      {/* Hero with Spline 3D object */}
+      {/* Hero with parallax 3D object */}
       <section className="relative min-h-[100svh] flex flex-col justify-end px-5 md:px-10 pb-12 md:pb-16 pt-28 md:pt-32 overflow-hidden">
-        {/* Spline viewer background on larger screens */}
-        <div className="hidden lg:block absolute inset-0 z-0 opacity-70">
-          <SplineHero />
-        </div>
-
-        {/* Fallback for smaller screens */}
-        <FloatingObject className="lg:hidden absolute top-0 right-0 w-full md:w-3/4 h-full z-0 opacity-60 md:opacity-70" />
+        <FloatingObject className="absolute top-0 right-0 w-full md:w-3/4 h-full z-0 opacity-60 md:opacity-70" />
 
         <div className="relative z-10 w-full max-w-[1600px] mx-auto">
           <Reveal className="flex items-baseline gap-4 mb-6" y={20}>
