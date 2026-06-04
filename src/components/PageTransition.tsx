@@ -2,35 +2,38 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { gsap } from "gsap";
 
-/** Page transition: lime curtain wipes up on route change. */
+/**
+ * Page transition: subtle fade + lift on route change. Non-blocking — the
+ * outgoing content fades immediately and the new route is fully interactive
+ * the moment it mounts (no overlay sticks around between routes).
+ */
 export function PageTransition({ children }: { children: ReactNode }) {
-  const curtain = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
   const isFirst = useRef(true);
 
   useEffect(() => {
-    const el = curtain.current;
+    const el = ref.current;
     if (!el) return;
     if (isFirst.current) {
       isFirst.current = false;
       return;
     }
-    const tl = gsap.timeline();
-    tl.fromTo(
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    // Ensure top of page + crisp entrance
+    window.scrollTo({ top: 0, behavior: "auto" });
+    gsap.fromTo(
       el,
-      { yPercent: 100 },
-      { yPercent: 0, duration: 0.55, ease: "power4.inOut" },
-    ).to(el, { yPercent: -100, duration: 0.6, ease: "power4.inOut", delay: 0.05 });
+      { opacity: 0, y: 18, scale: 0.995 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out", clearProps: "transform,opacity" },
+    );
   }, [path]);
 
   return (
-    <>
+    <div ref={ref} className="will-change-transform">
       {children}
-      <div
-        ref={curtain}
-        aria-hidden
-        className="fixed inset-0 z-[100] bg-brand pointer-events-none translate-y-full"
-      />
-    </>
+    </div>
   );
 }
