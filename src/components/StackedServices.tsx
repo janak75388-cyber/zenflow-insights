@@ -11,109 +11,121 @@ export function StackedServices({ items }: Props) {
   const root = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    const el = root.current;
-    if (!el) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+useEffect(() => {
+  const el = root.current;
+  if (!el) return;
 
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>("[data-stack-card]");
-      if (cards.length < 2) return;
+  const ctx = gsap.context(() => {
+    const cards =
+      gsap.utils.toArray<HTMLElement>("[data-stack-card]");
 
-      const cardH = cards[0].getBoundingClientRect().height;
-      const OVERLAP = 24; // px each card peeks above the previous
+    if (!cards.length) return;
 
-      // Position cards: card 0 is at y=0, card 1 starts below, etc.
-      cards.forEach((card, i) => {
-        if (i === 0) return;
-        gsap.set(card, { y: cardH + (i - 1) * OVERLAP });
+    cards.forEach((card, index) => {
+      gsap.set(card, {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        zIndex: index + 1,
+        y: index * 80,
       });
+    });
 
-      // Build a single scrubbed timeline that pulls every card into the stack
-      const tl = gsap.timeline({
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: "top top",
+        end: `+=${cards.length * window.innerHeight}`,
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    cards.forEach((card, index) => {
+      if (index === 0) return;
+
+      tl.to(
+        card,
+        {
+          y: -(index * 24),
+          ease: "none",
+        },
+        index - 1
+      );
+
+      tl.to(
+        cards[index - 1],
+        {
+          scale: 0.95,
+          opacity: 0.45,
+          ease: "none",
+        },
+        index - 1
+      );
+    });
+
+    cards.forEach((card) => {
+      gsap.from(card, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: "power3.out",
         scrollTrigger: {
-          trigger: el,
-          start: "top top",
-          // Each card needs ~60vh of scroll to settle; last card doesn't need a step
-          end: `+=${(cards.length - 1) * window.innerHeight * 0.65}`,
-          scrub: 0.6,
-          pin: true, // ← pins the section; no vacuum gap
-          anticipatePin: 1,
+          trigger: card,
+          start: "top 90%",
+          once: true,
         },
       });
+    });
 
-      cards.forEach((card, i) => {
-        if (i === 0) return;
+    const fine =
+      window.matchMedia("(pointer: fine)").matches;
 
-        // How far this card needs to travel to sit on top of card 0
-        const targetY = -(i - 1) * OVERLAP;
+    if (!fine) return;
 
-        // Each card's travel is one equal slice of the timeline
-        tl.to(
-          card,
-          {
-            y: targetY,
-            ease: "power2.inOut",
-          },
-          (i - 1) / (cards.length - 1), // staggered position in timeline
-        );
+    cards.forEach((card) => {
+      const inner =
+        card.querySelector<HTMLElement>("[data-tilt-inner]");
 
-        // Dim + scale the card below as the next card arrives
-        tl.to(
-          cards[i - 1],
-          {
-            scale: 0.97 - (i - 1) * 0.01,
-            opacity: 0.45,
-            ease: "power2.inOut",
-          },
-          (i - 1) / (cards.length - 1),
-        );
-      });
+      if (!inner) return;
 
-      // Entrance reveal (still fires on scroll-in before pin kicks in)
-      if (!reduce) {
-        cards.forEach((card) => {
-          gsap.from(card, {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: { trigger: card, start: "top 92%", once: true },
-          });
+      const onMove = (e: MouseEvent) => {
+        const r = card.getBoundingClientRect();
+
+        const px =
+          (e.clientX - r.left) / r.width - 0.5;
+
+        const py =
+          (e.clientY - r.top) / r.height - 0.5;
+
+        gsap.to(inner, {
+          rotateY: px * 6,
+          rotateX: -py * 6,
+          transformPerspective: 1200,
+          duration: 0.4,
+          ease: "power3.out",
         });
-      }
+      };
 
-      // 3-D tilt on pointer-fine devices
-      const fine = window.matchMedia("(pointer: fine)").matches;
-      if (!fine || reduce) return;
+      const onLeave = () => {
+        gsap.to(inner, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      };
 
-      cards.forEach((card) => {
-        const inner = card.querySelector<HTMLElement>("[data-tilt-inner]");
-        if (!inner) return;
+      card.addEventListener("mousemove", onMove);
+      card.addEventListener("mouseleave", onLeave);
+    });
+  }, root);
 
-        const onMove = (e: MouseEvent) => {
-          const r = card.getBoundingClientRect();
-          const px = (e.clientX - r.left) / r.width - 0.5;
-          const py = (e.clientY - r.top) / r.height - 0.5;
-          gsap.to(inner, {
-            rotateY: px * 5,
-            rotateX: -py * 5,
-            transformPerspective: 1000,
-            duration: 0.45,
-            ease: "power3.out",
-          });
-        };
-        const onLeave = () => {
-          gsap.to(inner, { rotateY: 0, rotateX: 0, duration: 0.6, ease: "power3.out" });
-        };
-
-        card.addEventListener("mousemove", onMove);
-        card.addEventListener("mouseleave", onLeave);
-      });
-    }, root);
-
-    return () => ctx.revert();
-  }, [items]);
+  return () => ctx.revert();
+}, [items]);
 
   const handleCardHover = (index: number) => {
     setHoveredIndex(index);
@@ -142,13 +154,19 @@ export function StackedServices({ items }: Props) {
 
   return (
     /* Outer wrapper — GSAP pins this element in place during the scroll sequence */
-    <div ref={root} className="relative w-full">
+    <div
+  ref={root}
+  className="relative w-full"
+  style={{
+    height: `${items.length * 100}vh`,
+  }}
+>
       {items.map((c, i) => (
         <div
           key={c.n}
           data-stack-card
           /* Cards are absolutely stacked; their real positions are set by GSAP */
-          className={i === 0 ? "relative" : "absolute top-0 left-0 w-full"}
+          className="absolute top-0 left-0 w-full"
           style={{ zIndex: i + 1, transformStyle: "preserve-3d" }}
           onMouseEnter={() => handleCardHover(i)}
           onMouseLeave={handleCardLeave}
