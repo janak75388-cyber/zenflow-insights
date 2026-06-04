@@ -37,7 +37,7 @@ export function StackedServices({ items }: Props) {
           // Each card needs ~60vh of scroll to settle; last card doesn't need a step
           end: `+=${(cards.length - 1) * window.innerHeight * 0.65}`,
           scrub: 0.6,
-          pin: true,       // ← pins the section; no vacuum gap
+          pin: true, // ← pins the section; no vacuum gap
           anticipatePin: 1,
         },
       });
@@ -55,7 +55,7 @@ export function StackedServices({ items }: Props) {
             y: targetY,
             ease: "power2.inOut",
           },
-          (i - 1) / (cards.length - 1)  // staggered position in timeline
+          (i - 1) / (cards.length - 1), // staggered position in timeline
         );
 
         // Dim + scale the card below as the next card arrives
@@ -66,7 +66,7 @@ export function StackedServices({ items }: Props) {
             opacity: 0.45,
             ease: "power2.inOut",
           },
-          (i - 1) / (cards.length - 1)
+          (i - 1) / (cards.length - 1),
         );
       });
 
@@ -121,15 +121,11 @@ export function StackedServices({ items }: Props) {
     if (reduce) return;
 
     items.forEach((_, i) => {
-      const title = root.current?.querySelector(
-        `[data-service-title="${i}"]`
-      ) as HTMLElement;
+      const title = root.current?.querySelector(`[data-service-title="${i}"]`) as HTMLElement;
       if (title) gsap.to(title, { opacity: i === index ? 1 : 0.35, duration: 0.35 });
     });
 
-    const obj = root.current?.querySelector(
-      `[data-service-object="${index}"]`
-    ) as HTMLElement;
+    const obj = root.current?.querySelector(`[data-service-object="${index}"]`) as HTMLElement;
     if (obj) gsap.to(obj, { rotation: 360, scale: 1.08, duration: 0.75, ease: "back.out" });
   };
 
@@ -139,9 +135,7 @@ export function StackedServices({ items }: Props) {
     if (reduce) return;
 
     items.forEach((_, i) => {
-      const title = root.current?.querySelector(
-        `[data-service-title="${i}"]`
-      ) as HTMLElement;
+      const title = root.current?.querySelector(`[data-service-title="${i}"]`) as HTMLElement;
       if (title) gsap.to(title, { opacity: 1, duration: 0.35 });
     });
   };

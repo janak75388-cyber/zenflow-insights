@@ -185,7 +185,7 @@ function Home() {
       </section>
 
       {/* Image Reveal Section */}
-      <ImageReveal src={heroShape} alt="Studio craftsmanship" height="h-[70vh]" />
+      <ImageReveal src={heroShape} alt="Studio craftsmanship" />
 
       {/* Horizontal portfolio with pinned scroll */}
       <HorizontalPortfolio items={portfolio} />
