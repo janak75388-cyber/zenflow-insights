@@ -39,11 +39,11 @@ const portfolio = [
 ];
 
 const metrics = [
-  { label: "Deployments", value: "140+" },
-  { label: "Performance Lift", value: "4.2x" },
-  { label: "Avg. Latency", value: "24ms" },
-  { label: "Awwwards Won", value: "08" },
-];
+  { label: "Deployments", to: 140, suffix: "+" },
+  { label: "Performance Lift", to: 4.2, decimals: 1, suffix: "x" },
+  { label: "Avg. Latency", to: 24, suffix: "ms" },
+  { label: "Awwwards Won", to: 8, pad: 2 },
+] as const;
 
 function Home() {
   return (
