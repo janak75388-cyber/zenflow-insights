@@ -7,6 +7,11 @@ type Props = { items: Card[] };
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Sticky-stack cards. Each card fully covers the previous (solid bg + ascending
+ * z-index). Previous cards scale + dim subtly under the new one. Stack height
+ * is just (N * cardSlot) — no trailing blank gap.
+ */
 export function StackedServices({ items }: Props) {
   const root = useRef<HTMLDivElement>(null);
 
@@ -21,9 +26,9 @@ export function StackedServices({ items }: Props) {
       // Entrance reveal
       cards.forEach((card) => {
         gsap.from(card, {
-          y: 60,
+          y: 40,
           opacity: 0,
-          duration: 1,
+          duration: 0.9,
           ease: "power3.out",
           scrollTrigger: { trigger: card, start: "top 90%" },
         });
@@ -31,19 +36,18 @@ export function StackedServices({ items }: Props) {
 
       if (reduce) return;
 
-      // Stacking effect
+      // Each previous card scales + dims as the NEXT card overlaps it.
       cards.forEach((card, i) => {
         if (i === cards.length - 1) return;
+        const next = cards[i + 1];
         gsap.to(card, {
-          scale: 1 - (cards.length - 1 - i) * 0.035,
-          yPercent: -6 * (cards.length - 1 - i),
-          opacity: 0.55,
+          scale: 0.97,
+          opacity: 0.5,
           ease: "none",
           scrollTrigger: {
-            trigger: card,
-            start: "top 12%",
-            endTrigger: cards[cards.length - 1],
-            end: "top 20%",
+            trigger: next,
+            start: "top 30%",
+            end: "top 12%",
             scrub: true,
           },
         });
@@ -60,8 +64,8 @@ export function StackedServices({ items }: Props) {
           const px = (e.clientX - r.left) / r.width - 0.5;
           const py = (e.clientY - r.top) / r.height - 0.5;
           gsap.to(inner, {
-            rotateY: px * 6,
-            rotateX: -py * 6,
+            rotateY: px * 5,
+            rotateX: -py * 5,
             transformPerspective: 1000,
             duration: 0.5,
             ease: "power3.out",
@@ -79,18 +83,19 @@ export function StackedServices({ items }: Props) {
 
   return (
     <div ref={root} className="relative">
-      {items.map((c) => (
+      {items.map((c, i) => (
         <div
           key={c.n}
           data-stack-card
-          className="sticky top-20 md:top-28 mb-4 md:mb-6 origin-top will-change-transform"
-          style={{ transformStyle: "preserve-3d" }}
+          className="sticky top-24 md:top-28 origin-top will-change-transform"
+          style={{ zIndex: i + 1, transformStyle: "preserve-3d" }}
         >
           <article
             data-tilt-inner
-            className="rounded-3xl border border-foreground/10 bg-background/70 backdrop-blur-xl p-6 md:p-12 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.25)] hover:shadow-[0_40px_100px_-40px_rgba(0,0,0,0.4)] transition-shadow duration-500 will-change-transform"
+            className="relative overflow-hidden rounded-3xl border border-foreground/10 bg-background p-6 md:p-12 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.35)] will-change-transform"
             style={{ transformStyle: "preserve-3d" }}
           >
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-brand/[0.06] via-transparent to-transparent pointer-events-none" />
             <div className="flex items-baseline justify-between mb-6 md:mb-8 gap-4">
               <span className="text-xs font-bold text-foreground/30 tracking-widest">{c.n}</span>
               <div className="flex flex-wrap gap-2 justify-end">
@@ -104,6 +109,8 @@ export function StackedServices({ items }: Props) {
             <h3 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-balance">{c.title}</h3>
             <p className="mt-4 md:mt-6 max-w-xl text-sm md:text-base text-foreground/60 font-light leading-relaxed text-balance">{c.copy}</p>
           </article>
+          {/* Slot spacer — drives scroll distance for each card */}
+          {i < items.length - 1 && <div aria-hidden className="h-[55vh] md:h-[60vh]" />}
         </div>
       ))}
     </div>
