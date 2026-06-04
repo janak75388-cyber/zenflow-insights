@@ -16,7 +16,14 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export function Reveal({ children, as: Tag = "div", className, delay = 0, y = 40, splitWords = false }: Props) {
+export function Reveal({
+  children,
+  as: Tag = "div",
+  className,
+  delay = 0,
+  y = 40,
+  splitWords = false,
+}: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

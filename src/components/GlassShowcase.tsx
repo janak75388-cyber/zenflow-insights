@@ -62,9 +62,21 @@ export function GlassShowcase() {
   }, []);
 
   const blocks = [
-    { kicker: "Systems", title: "Designed as software", copy: "Identities engineered as living interfaces — versioned, themable, instrumented." },
-    { kicker: "Velocity", title: "Ship in days, not quarters", copy: "Edge-native delivery pipeline. Prototype Monday, in production by Friday." },
-    { kicker: "Intelligence", title: "AI woven into the surface", copy: "From copy-aware UI to retrieval-grounded chat — intelligence as a primitive, not a feature." },
+    {
+      kicker: "Systems",
+      title: "Designed as software",
+      copy: "Identities engineered as living interfaces — versioned, themable, instrumented.",
+    },
+    {
+      kicker: "Velocity",
+      title: "Ship in days, not quarters",
+      copy: "Edge-native delivery pipeline. Prototype Monday, in production by Friday.",
+    },
+    {
+      kicker: "Intelligence",
+      title: "AI woven into the surface",
+      copy: "From copy-aware UI to retrieval-grounded chat — intelligence as a primitive, not a feature.",
+    },
   ];
 
   return (
@@ -82,7 +94,10 @@ export function GlassShowcase() {
         <div className="absolute size-[55vmin] rounded-full bg-brand/30 blur-[80px]" />
 
         {/* The orb */}
-        <div ref={orb} className="relative size-[55vmin] max-w-[600px] max-h-[600px] will-change-transform">
+        <div
+          ref={orb}
+          className="relative size-[55vmin] max-w-[600px] max-h-[600px] will-change-transform"
+        >
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand via-brand/40 to-foreground/20 shadow-[0_0_120px_30px_rgba(192,255,0,0.25)]" />
           <div className="absolute inset-[8%] rounded-full bg-gradient-to-tr from-background/10 to-background/40 backdrop-blur-xl border border-background/20" />
           <div className="absolute inset-[18%] rounded-full bg-gradient-to-br from-background/5 to-background/20 backdrop-blur-2xl border border-background/10" />
@@ -91,7 +106,9 @@ export function GlassShowcase() {
 
         {/* Section label */}
         <div className="absolute top-8 md:top-12 left-6 md:left-10 right-6 md:right-10 flex items-center justify-between text-[10px] md:text-[11px] font-bold uppercase tracking-[0.3em] opacity-60">
-          <span className="flex items-center gap-3"><span className="size-2 rounded-full bg-brand" /> Showcase / 03</span>
+          <span className="flex items-center gap-3">
+            <span className="size-2 rounded-full bg-brand" /> Showcase / 03
+          </span>
           <span className="font-serif italic normal-case opacity-70">A studio in motion</span>
         </div>
       </div>
@@ -106,9 +123,15 @@ export function GlassShowcase() {
                 i % 2 === 0 ? "md:mr-auto md:max-w-xl" : "md:ml-auto md:max-w-xl"
               } transition-all duration-500 hover:-translate-y-1.5 hover:bg-background/[0.1] hover:border-brand/40`}
             >
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand">{b.kicker}</span>
-              <h3 className="mt-4 text-3xl md:text-5xl font-extrabold tracking-tighter leading-[0.95]">{b.title}</h3>
-              <p className="mt-4 text-sm md:text-base font-light text-background/70 max-w-md leading-relaxed">{b.copy}</p>
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand">
+                {b.kicker}
+              </span>
+              <h3 className="mt-4 text-3xl md:text-5xl font-extrabold tracking-tighter leading-[0.95]">
+                {b.title}
+              </h3>
+              <p className="mt-4 text-sm md:text-base font-light text-background/70 max-w-md leading-relaxed">
+                {b.copy}
+              </p>
             </div>
           ))}
         </div>

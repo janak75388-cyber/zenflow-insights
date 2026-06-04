@@ -86,7 +86,9 @@ export function SiteNav() {
               key={l.to}
               to={l.to}
               className="hover:text-foreground/60 transition-colors"
-              activeProps={{ className: "underline decoration-brand decoration-2 underline-offset-4" }}
+              activeProps={{
+                className: "underline decoration-brand decoration-2 underline-offset-4",
+              }}
             >
               {l.label}
             </Link>
@@ -139,7 +141,9 @@ export function SiteNav() {
                   >
                     <span className="text-[10px] font-bold tracking-widest opacity-40">{l.n}</span>
                     <span>{l.label}</span>
-                    <span className="ml-auto text-2xl opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">→</span>
+                    <span className="ml-auto text-2xl opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                      →
+                    </span>
                   </Link>
                 </li>
               ))}

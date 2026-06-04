@@ -38,7 +38,13 @@ export function FloatingObject({ className }: { className?: string }) {
           const { innerWidth: ww, innerHeight: hh } = window;
           const x = (e.clientX / ww - 0.5) * 30;
           const y = (e.clientY / hh - 0.5) * 30;
-          gsap.to(i, { x, y: `+=${y * 0.1}`, duration: 1.2, ease: "power3.out", overwrite: "auto" });
+          gsap.to(i, {
+            x,
+            y: `+=${y * 0.1}`,
+            duration: 1.2,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
         };
         window.addEventListener("mousemove", onMove);
         return () => window.removeEventListener("mousemove", onMove);
@@ -51,7 +57,12 @@ export function FloatingObject({ className }: { className?: string }) {
   return (
     <div ref={wrap} className={`pointer-events-none ${className ?? ""}`}>
       <div ref={inner} className="w-full h-full will-change-transform">
-        <img src={heroShape} alt="" aria-hidden className="w-full h-full object-contain object-right" />
+        <img
+          src={heroShape}
+          alt=""
+          aria-hidden
+          className="w-full h-full object-contain object-right"
+        />
       </div>
     </div>
   );

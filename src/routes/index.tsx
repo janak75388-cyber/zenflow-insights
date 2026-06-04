@@ -6,11 +6,13 @@ import { MagneticButton } from "@/components/MagneticButton";
 import { StackedServices } from "@/components/StackedServices";
 import { HorizontalPortfolio } from "@/components/HorizontalPortfolio";
 import { FloatingObject } from "@/components/FloatingObject";
-import { GlassShowcase } from "@/components/GlassShowcase";
+import { Mobile3DHero } from "@/components/Mobile3DHero";
+import { ImageReveal } from "@/components/ImageReveal";
 import { CountUp } from "@/components/CountUp";
 import workVault from "@/assets/work-vault.jpg";
 import workLumina from "@/assets/work-lumina.jpg";
 import workAether from "@/assets/work-aether.jpg";
+import heroShape from "@/assets/hero-shape.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -100,6 +102,9 @@ function Home() {
         </div>
       </section>
 
+      {/* Mobile 3D Hero */}
+      <Mobile3DHero />
+
       {/* Marquee */}
       <div className="overflow-hidden border-y border-foreground/5 py-6">
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
@@ -128,11 +133,11 @@ function Home() {
         </div>
       </section>
 
+      {/* Image Reveal Section */}
+      <ImageReveal src={heroShape} alt="Studio craftsmanship" height="h-[70vh]" />
+
       {/* Horizontal portfolio with pinned scroll */}
       <HorizontalPortfolio items={portfolio} />
-
-      {/* Glassmorphism 3D showcase */}
-      <GlassShowcase />
 
       {/* Metrics with glass cards */}
       <section className="relative py-24 md:py-32 px-6 md:px-10 bg-brand text-brand-foreground overflow-hidden">
@@ -195,3 +200,4 @@ function Home() {
     </div>
   );
 }
+

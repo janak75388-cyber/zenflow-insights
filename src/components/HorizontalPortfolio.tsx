@@ -126,9 +126,9 @@ export function HorizontalPortfolio({ items, heading = "Selected Work" }: Props)
             <article
               key={`${it.name}-${i}`}
               data-port-card
-              className={`shrink-0 ${isDesktop ? "w-[78vw] md:w-[52vw] lg:w-[42vw]" : "w-[82vw] snap-item"} flex flex-col gap-5`}
+              className={`shrink-0 ${isDesktop ? "w-[78vw] md:w-[52vw] lg:w-[42vw]" : "w-[82vw] snap-item"} flex flex-col gap-5 group`}
             >
-              <div className="relative w-full aspect-[4/5] bg-muted overflow-hidden rounded-2xl outline outline-foreground/5 group">
+              <div className="relative w-full aspect-[4/5] bg-muted overflow-hidden rounded-2xl outline outline-foreground/5">
                 <img
                   data-port-img
                   src={it.img}
@@ -143,9 +143,13 @@ export function HorizontalPortfolio({ items, heading = "Selected Work" }: Props)
               <div className="flex justify-between items-end">
                 <div>
                   <h3 className="text-2xl md:text-4xl font-extrabold tracking-tight">{it.name}</h3>
-                  <p className="text-foreground/40 uppercase text-[10px] font-bold tracking-[0.2em] mt-2">{it.tag}</p>
+                  <p className="text-foreground/40 uppercase text-[10px] font-bold tracking-[0.2em] mt-2">
+                    {it.tag}
+                  </p>
                 </div>
-                <span className="size-11 md:size-12 rounded-full border border-foreground/10 flex items-center justify-center hover:bg-foreground hover:text-background transition-all">↗</span>
+                <span className="size-11 md:size-12 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all duration-300">
+                  ↗
+                </span>
               </div>
             </article>
           ))}

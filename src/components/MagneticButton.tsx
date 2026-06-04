@@ -1,4 +1,10 @@
-import { useEffect, useRef, type ReactNode, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from "react";
+import {
+  useEffect,
+  useRef,
+  type ReactNode,
+  type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+} from "react";
 import { gsap } from "gsap";
 
 type CommonProps = {
@@ -7,7 +13,10 @@ type CommonProps = {
   strength?: number;
 };
 
-type AnchorProps = CommonProps & { as: "a"; href: string } & AnchorHTMLAttributes<HTMLAnchorElement>;
+type AnchorProps = CommonProps & {
+  as: "a";
+  href: string;
+} & AnchorHTMLAttributes<HTMLAnchorElement>;
 type ButtonProps = CommonProps & { as?: "button" } & ButtonHTMLAttributes<HTMLButtonElement>;
 type Props = AnchorProps | ButtonProps;
 

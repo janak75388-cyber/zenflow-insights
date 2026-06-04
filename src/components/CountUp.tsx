@@ -15,7 +15,15 @@ type Props = {
 };
 
 /** Animated counter that restarts every time it enters the viewport. */
-export function CountUp({ to, decimals = 0, prefix = "", suffix = "", pad = 0, duration = 1, className }: Props) {
+export function CountUp({
+  to,
+  decimals = 0,
+  prefix = "",
+  suffix = "",
+  pad = 0,
+  duration = 1,
+  className,
+}: Props) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -77,5 +85,11 @@ export function CountUp({ to, decimals = 0, prefix = "", suffix = "", pad = 0, d
     };
   }, [to, decimals, prefix, suffix, pad, duration]);
 
-  return <span ref={ref} className={className}>{prefix}{pad > 0 ? "0".repeat(pad) : "0"}{suffix}</span>;
+  return (
+    <span ref={ref} className={className}>
+      {prefix}
+      {pad > 0 ? "0".repeat(pad) : "0"}
+      {suffix}
+    </span>
+  );
 }
