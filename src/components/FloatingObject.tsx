@@ -14,33 +14,35 @@ export function FloatingObject({ className }: { className?: string }) {
     const w = wrap.current;
     const i = inner.current;
     if (!w || !i) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const fine = window.matchMedia("(pointer: fine)").matches;
 
     const ctx = gsap.context(() => {
-      // Idle float
       gsap.to(i, {
-        y: "+=24",
-        rotate: 4,
+        y: "+=20",
+        rotate: 3,
         duration: 4,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
       });
-      // Scroll parallax
       gsap.to(w, {
-        yPercent: -20,
-        rotate: -8,
+        yPercent: -25,
+        rotate: -6,
         ease: "none",
         scrollTrigger: { trigger: w, start: "top bottom", end: "bottom top", scrub: true },
       });
-      // Cursor parallax
-      const onMove = (e: MouseEvent) => {
-        const { innerWidth: ww, innerHeight: hh } = window;
-        const x = (e.clientX / ww - 0.5) * 30;
-        const y = (e.clientY / hh - 0.5) * 30;
-        gsap.to(i, { x, y: `+=${y * 0.1}`, duration: 1.2, ease: "power3.out", overwrite: "auto" });
-      };
-      window.addEventListener("mousemove", onMove);
-      return () => window.removeEventListener("mousemove", onMove);
+      if (fine) {
+        const onMove = (e: MouseEvent) => {
+          const { innerWidth: ww, innerHeight: hh } = window;
+          const x = (e.clientX / ww - 0.5) * 30;
+          const y = (e.clientY / hh - 0.5) * 30;
+          gsap.to(i, { x, y: `+=${y * 0.1}`, duration: 1.2, ease: "power3.out", overwrite: "auto" });
+        };
+        window.addEventListener("mousemove", onMove);
+        return () => window.removeEventListener("mousemove", onMove);
+      }
     }, wrap);
 
     return () => ctx.revert();

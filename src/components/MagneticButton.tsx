@@ -21,6 +21,11 @@ export function MagneticButton(props: Props) {
     const inner = innerRef.current;
     if (!el || !inner) return;
 
+    // Only on devices with fine pointer (skip touch)
+    const fine = window.matchMedia("(pointer: fine)").matches;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!fine || reduce) return;
+
     const onMove = (e: Event) => {
       const me = e as MouseEvent;
       const rect = el.getBoundingClientRect();
@@ -42,7 +47,7 @@ export function MagneticButton(props: Props) {
     };
   }, [strength]);
 
-  const classes = `inline-block will-change-transform ${className ?? ""}`;
+  const classes = `inline-block will-change-transform btn-glow ${className ?? ""}`;
   const inner = (
     <span ref={innerRef} className="inline-flex items-center gap-4 will-change-transform">
       {children}
